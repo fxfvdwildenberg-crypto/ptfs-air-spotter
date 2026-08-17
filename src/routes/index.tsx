@@ -379,6 +379,22 @@ function RadarPage() {
                   </Button>
                 </div>
 
+                <p className="px-1 pt-5 pb-2 font-display text-[11px] tracking-console text-muted-foreground">
+                  Charts
+                </p>
+                <div className="space-y-2">
+                  <Button asChild variant="secondary" className="w-full justify-start gap-2">
+                    <a href="https://aeronav.space/app" target="_blank" rel="noreferrer noopener">
+                      <Map className="size-4" /> AeroNav charts
+                    </a>
+                  </Button>
+                  <Button asChild variant="secondary" className="w-full justify-start gap-2">
+                    <a href="https://ptfs.app/charts" target="_blank" rel="noreferrer noopener">
+                      <Map className="size-4" /> PTFS.app charts
+                    </a>
+                  </Button>
+                </div>
+
                 <Button
                   variant="secondary"
                   className="mt-4 w-full gap-2"
