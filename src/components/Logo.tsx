@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 export function Logo({ className, alt = "ATC365" }: { className?: string; alt?: string }) {
   return (
     <img
-      src={logo.url}
+      src={logo}
       alt={alt}
       className={cn("h-8 w-auto select-none object-contain", className)}
       draggable={false}
