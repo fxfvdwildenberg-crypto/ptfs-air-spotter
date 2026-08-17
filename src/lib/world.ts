@@ -9,18 +9,18 @@
  * the map crossfades from the vector island into that image as you zoom in.
  */
 
-import orenjiImg from "@/assets/islands/orenji.png.asset.json";
-import perthImg from "@/assets/islands/perth.png.asset.json";
-import izoliraniImg from "@/assets/islands/izolirani.png.asset.json";
-import cyprusImg from "@/assets/islands/cyprus.png.asset.json";
-import skopelosImg from "@/assets/islands/skopelos.png.asset.json";
-import stBarthImg from "@/assets/islands/saint-barthelemy.png.asset.json";
-import grindavikImg from "@/assets/islands/grindavik.png.asset.json";
-import rockfordImg from "@/assets/islands/greater-rockford.png.asset.json";
-import sauthemptonaImg from "@/assets/islands/sauthemptona.png.asset.json";
-import ussImg from "@/assets/islands/uss-carrier.png.asset.json";
-import hmsImg from "@/assets/islands/hms-carrier.png.asset.json";
-import oilRigImg from "@/assets/islands/oil-rig.png.asset.json";
+import orenjiImg from "@/assets/islands/orenji.png";
+import perthImg from "@/assets/islands/perth.png";
+import izoliraniImg from "@/assets/islands/izolirani.png";
+import cyprusImg from "@/assets/islands/cyprus.png";
+import skopelosImg from "@/assets/islands/skopelos.png";
+import stBarthImg from "@/assets/islands/saint-barthelemy.png";
+import grindavikImg from "@/assets/islands/grindavik.png";
+import rockfordImg from "@/assets/islands/greater-rockford.png";
+import sauthemptonaImg from "@/assets/islands/sauthemptona.png";
+import ussImg from "@/assets/islands/uss-carrier.png";
+import hmsImg from "@/assets/islands/hms-carrier.png";
+import oilRigImg from "@/assets/islands/oil-rig.png";
 
 export type Airport = {
 
