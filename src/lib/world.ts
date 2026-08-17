@@ -57,10 +57,10 @@ export type Island = {
 };
 
 const img = (
-  a: { url: string },
+  a: string,
   w: number,
   h: number,
-): { image: string; imageAspect: number } => ({ image: a.url, imageAspect: w / h });
+): { image: string; imageAspect: number } => ({ image: a, imageAspect: w / h });
 
 export const ISLANDS: Island[] = [
   { slug: "orenji", name: "Orenji", x: 433, y: 78, radius: 58, seed: 11, terrain: "green", ...img(orenjiImg, 792, 628) },
