@@ -179,6 +179,7 @@ export type Database = {
           callsign: string
           created_at: string
           cruise_alt: number
+          cruise_speed: number
           dep_icao: string
           dep_time: string
           id: string
@@ -195,6 +196,7 @@ export type Database = {
           callsign: string
           created_at?: string
           cruise_alt?: number
+          cruise_speed?: number
           dep_icao: string
           dep_time: string
           id?: string
@@ -211,6 +213,7 @@ export type Database = {
           callsign?: string
           created_at?: string
           cruise_alt?: number
+          cruise_speed?: number
           dep_icao?: string
           dep_time?: string
           id?: string
