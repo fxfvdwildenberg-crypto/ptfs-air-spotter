@@ -80,7 +80,7 @@ export type Database = {
           route: string | null
           status: string
           updated_at: string
-          user_id: string
+          user_id: string | null
         }
         Insert: {
           aircraft?: string
@@ -96,7 +96,7 @@ export type Database = {
           route?: string | null
           status?: string
           updated_at?: string
-          user_id: string
+          user_id?: string | null
         }
         Update: {
           aircraft?: string
@@ -112,7 +112,7 @@ export type Database = {
           route?: string | null
           status?: string
           updated_at?: string
-          user_id?: string
+          user_id?: string | null
         }
         Relationships: []
       }
