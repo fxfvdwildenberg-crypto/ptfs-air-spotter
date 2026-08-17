@@ -13,6 +13,7 @@ import {
   ListChecks,
   LogIn,
   Menu,
+  Map as MapIcon,
   PlaneTakeoff,
   Radio,
   Route as RouteIcon,
@@ -385,12 +386,12 @@ function RadarPage() {
                 <div className="space-y-2">
                   <Button asChild variant="secondary" className="w-full justify-start gap-2">
                     <a href="https://aeronav.space/app" target="_blank" rel="noreferrer noopener">
-                      <Map className="size-4" /> AeroNav charts
+                      <MapIcon className="size-4" /> AeroNav charts
                     </a>
                   </Button>
                   <Button asChild variant="secondary" className="w-full justify-start gap-2">
                     <a href="https://ptfs.app/charts" target="_blank" rel="noreferrer noopener">
-                      <Map className="size-4" /> PTFS.app charts
+                      <MapIcon className="size-4" /> PTFS.app charts
                     </a>
                   </Button>
                 </div>
