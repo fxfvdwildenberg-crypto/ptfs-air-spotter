@@ -345,7 +345,7 @@ export function RadarMap({
           <IslandLayer
             key={isl.slug}
             island={isl}
-            detailT={island?.slug === isl.slug ? detailT : 0}
+            detailT={detailFor(isl)}
             labelScale={labelScale}
             markerScale={markerScale}
             focused={island?.slug === isl.slug}
