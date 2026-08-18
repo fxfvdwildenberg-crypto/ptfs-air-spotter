@@ -528,7 +528,7 @@ function IslandLayer({
           className="cursor-pointer"
           style={{ imageRendering: detailT > 0.5 ? "auto" : "auto" }}
           onClick={() => {
-            if (!dragged.current && !focused) onSelectIsland(island.slug);
+            if (!dragged.current && !focused && detailT < 0.3) onSelectIsland(island.slug);
           }}
         />
 
@@ -575,7 +575,7 @@ function IslandLayer({
         strokeWidth={labelScale * 0.6}
         className="cursor-pointer"
         onClick={() => {
-          if (!dragged.current && !focused) onSelectIsland(island.slug);
+          if (!dragged.current && !focused && detailT < 0.3) onSelectIsland(island.slug);
         }}
       />
 
