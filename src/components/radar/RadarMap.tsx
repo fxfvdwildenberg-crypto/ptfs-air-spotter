@@ -145,8 +145,10 @@ export function RadarMap({
   useEffect(() => () => { if (animRef.current) cancelAnimationFrame(animRef.current); }, []);
 
   const fitSpan = fitCamera(island).span;
-  const minSpan = island ? Math.max(island.radius * 0.35, 8) : 120;
-  const maxSpan = island ? fitSpan * 1.35 : WORLD_SIZE * 1.25;
+  // Zooming is never gated on picking an island first: the world view can be
+  // zoomed all the way down into any island and the detail layer follows.
+  const minSpan = 8;
+  const maxSpan = WORLD_SIZE * 1.25;
 
   /* ---------------- wheel zoom (non-passive) ---------------- */
   const handleWheelRef = useRef<(e: WheelEvent) => void>(() => {});
