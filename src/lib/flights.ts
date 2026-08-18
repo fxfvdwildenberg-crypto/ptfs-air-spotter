@@ -92,8 +92,8 @@ export function computeFlight(plan: FlightPlan, now: number): LiveFlight | null 
         : arr.elevation
       : Math.round(plan.cruise_alt * easeClimb(progress));
 
-  const hours = total / 3_600_000;
-  const groundSpeed = Math.round((dist * 1.2) / Math.max(hours, 0.05));
+  // Ground speed mirrors the speed filed in the flight plan.
+  const groundSpeed = Math.round(plan.cruise_speed);
 
   return {
     plan,

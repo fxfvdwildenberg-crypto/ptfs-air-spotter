@@ -145,8 +145,10 @@ export function RadarMap({
   useEffect(() => () => { if (animRef.current) cancelAnimationFrame(animRef.current); }, []);
 
   const fitSpan = fitCamera(island).span;
-  const minSpan = island ? Math.max(island.radius * 0.35, 8) : 120;
-  const maxSpan = island ? fitSpan * 1.35 : WORLD_SIZE * 1.25;
+  // Zooming is never gated on picking an island first: the world view can be
+  // zoomed all the way down into any island and the detail layer follows.
+  const minSpan = 8;
+  const maxSpan = WORLD_SIZE * 1.25;
 
   /* ---------------- wheel zoom (non-passive) ---------------- */
   const handleWheelRef = useRef<(e: WheelEvent) => void>(() => {});
@@ -234,8 +236,17 @@ export function RadarMap({
   const viewH = size.h * scale;
   const viewBox = `${cam.cx - viewW / 2} ${cam.cy - viewH / 2} ${viewW} ${viewH}`;
 
-  // 0 = schematic overview, 1 = full high-resolution detail.
-  const detailT = island ? clamp01((fitSpan - cam.span) / (fitSpan * 0.45)) : 0;
+  /**
+   * 0 = schematic overview, 1 = full high-resolution detail. Purely a function
+   * of how close the camera is to an island, so detail mode kicks in on zoom
+   * without ever having to select the island first.
+   */
+  const detailFor = useCallback((isl: Island) => {
+    const fit = Math.max(isl.radius * 3.2, 70);
+    return clamp01((fit - cam.span) / (fit * 0.45));
+  }, [cam.span]);
+
+  const detailT = island ? detailFor(island) : Math.max(0, ...ISLANDS.map(detailFor));
   const labelScale = cam.span / 1000;
 
   /**
@@ -246,10 +257,8 @@ export function RadarMap({
   const growth = clamp(Math.pow(baseSpan / Math.max(cam.span, 1), 0.5), 1, 3);
   const markerScale = labelScale * growth;
 
-  const visibleIslands = useMemo(
-    () => (island ? [island] : ISLANDS),
-    [island],
-  );
+  // Always render every island: zoom, not selection, decides the detail level.
+  const visibleIslands = ISLANDS;
 
   const zoomBy = (factor: number) => {
     const next = clamp(camRef.current.span * factor, minSpan, maxSpan);
@@ -336,7 +345,7 @@ export function RadarMap({
           <IslandLayer
             key={isl.slug}
             island={isl}
-            detailT={island?.slug === isl.slug ? detailT : 0}
+            detailT={detailFor(isl)}
             labelScale={labelScale}
             markerScale={markerScale}
             focused={island?.slug === isl.slug}
@@ -444,7 +453,7 @@ export function RadarMap({
         </button>
       </div>
 
-      {island && (
+      {detailT > 0.02 && (
         <div className="pointer-events-none absolute bottom-28 left-3 rounded-md border border-border bg-card/85 px-2.5 py-1.5 backdrop-blur">
           <div className="font-display text-[11px] tracking-console text-muted-foreground">
             Detail
@@ -519,11 +528,11 @@ function IslandLayer({
           className="cursor-pointer"
           style={{ imageRendering: detailT > 0.5 ? "auto" : "auto" }}
           onClick={() => {
-            if (!dragged.current && !focused) onSelectIsland(island.slug);
+            if (!dragged.current && !focused && detailT < 0.3) onSelectIsland(island.slug);
           }}
         />
 
-        {(focused ? ports : ports.filter((p) => p.major)).map((p) => (
+        {(focused || detailT > 0.15 ? ports : ports.filter((p) => p.major)).map((p) => (
           <AirportMarker
             key={p.icao}
             airport={p}
@@ -566,7 +575,7 @@ function IslandLayer({
         strokeWidth={labelScale * 0.6}
         className="cursor-pointer"
         onClick={() => {
-          if (!dragged.current && !focused) onSelectIsland(island.slug);
+          if (!dragged.current && !focused && detailT < 0.3) onSelectIsland(island.slug);
         }}
       />
 
@@ -617,7 +626,7 @@ function IslandLayer({
 
 
       {/* Airport markers */}
-      {(focused ? ports : ports.filter((p) => p.major)).map((p) => (
+      {(focused || detailT > 0.15 ? ports : ports.filter((p) => p.major)).map((p) => (
         <AirportMarker
           key={p.icao}
           airport={p}
