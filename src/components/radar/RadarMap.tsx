@@ -236,8 +236,17 @@ export function RadarMap({
   const viewH = size.h * scale;
   const viewBox = `${cam.cx - viewW / 2} ${cam.cy - viewH / 2} ${viewW} ${viewH}`;
 
-  // 0 = schematic overview, 1 = full high-resolution detail.
-  const detailT = island ? clamp01((fitSpan - cam.span) / (fitSpan * 0.45)) : 0;
+  /**
+   * 0 = schematic overview, 1 = full high-resolution detail. Purely a function
+   * of how close the camera is to an island, so detail mode kicks in on zoom
+   * without ever having to select the island first.
+   */
+  const detailFor = useCallback((isl: Island) => {
+    const fit = Math.max(isl.radius * 3.2, 70);
+    return clamp01((fit - cam.span) / (fit * 0.45));
+  }, [cam.span]);
+
+  const detailT = island ? detailFor(island) : Math.max(0, ...ISLANDS.map(detailFor));
   const labelScale = cam.span / 1000;
 
   /**
@@ -248,10 +257,8 @@ export function RadarMap({
   const growth = clamp(Math.pow(baseSpan / Math.max(cam.span, 1), 0.5), 1, 3);
   const markerScale = labelScale * growth;
 
-  const visibleIslands = useMemo(
-    () => (island ? [island] : ISLANDS),
-    [island],
-  );
+  // Always render every island: zoom, not selection, decides the detail level.
+  const visibleIslands = ISLANDS;
 
   const zoomBy = (factor: number) => {
     const next = clamp(camRef.current.span * factor, minSpan, maxSpan);
