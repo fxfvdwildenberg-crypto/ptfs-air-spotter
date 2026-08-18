@@ -453,7 +453,7 @@ export function RadarMap({
         </button>
       </div>
 
-      {island && (
+      {detailT > 0.02 && (
         <div className="pointer-events-none absolute bottom-28 left-3 rounded-md border border-border bg-card/85 px-2.5 py-1.5 backdrop-blur">
           <div className="font-display text-[11px] tracking-console text-muted-foreground">
             Detail
@@ -532,7 +532,7 @@ function IslandLayer({
           }}
         />
 
-        {(focused ? ports : ports.filter((p) => p.major)).map((p) => (
+        {(focused || detailT > 0.15 ? ports : ports.filter((p) => p.major)).map((p) => (
           <AirportMarker
             key={p.icao}
             airport={p}
@@ -626,7 +626,7 @@ function IslandLayer({
 
 
       {/* Airport markers */}
-      {(focused ? ports : ports.filter((p) => p.major)).map((p) => (
+      {(focused || detailT > 0.15 ? ports : ports.filter((p) => p.major)).map((p) => (
         <AirportMarker
           key={p.icao}
           airport={p}
